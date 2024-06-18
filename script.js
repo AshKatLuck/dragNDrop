@@ -67,7 +67,8 @@ function createItemEl(columnEl, column, item, index) {
   listEl.classList.add('drag-item');
   listEl.textContent=item;
   listEl.draggable=true;
-  listEl.setAttribute('ondragstart','drag(event)')
+  listEl.setAttribute('ondragstart','drag(event)');
+  // console.log(listEl);
   //Append to column el
   columnEl.appendChild(listEl);
 
@@ -106,6 +107,30 @@ function updateDOM() {
   // Run getSavedColumns only once, Update Local Storage
   updatedOnLoad=true;
   updateSavedColumns();
+}
+
+//Add to column and clear the text after save
+function addToColumn(column){
+  const itemText=addItems[column].textContent;
+  const selectedArray=listArray[column];
+  selectedArray.push(itemText);
+  addItems[column].textContent='';  
+  updateDOM();
+}
+
+// Show add item input box
+function showInputBox(column){
+  addBtns[column].style.visbility='hidden';
+  saveItemBtns[column].style.display='flex';
+  addItemContainers[column].style.display='flex';
+}
+
+//Hide Input Box
+function hideInputBox(column){
+  addBtns[column].style.visbility='visible';
+  saveItemBtns[column].style.display='none';
+  addItemContainers[column].style.display='none';
+  addToColumn(column);
 }
 
 //function to rebuild arrays
