@@ -86,23 +86,48 @@ function updateDOM() {
   })
 
   // Progress Column
+  progressList.textContent='';
    progressListArray.forEach((progressItem, index)=>{
     createItemEl(progressList,1,progressItem,index);
   })
 
   // Complete Column
+  completeList.textContent='';
    completeListArray.forEach((completeItem, index)=>{
     createItemEl(completeList,2,completeItem,index);
   })
 
   // On Hold Column
+  onHoldList.textContent='';
    onHoldListArray.forEach((onHoldItem, index)=>{
     createItemEl(onHoldList,3,onHoldItem,index);
   })
 
   // Run getSavedColumns only once, Update Local Storage
+  updatedOnLoad=true;
+  updateSavedColumns();
+}
 
-
+//function to rebuild arrays
+function rebuildArrays(){  
+  backlogListArray=[];
+  for(let i=0;i<backlogList.children.length;i++){
+    backlogListArray.push(backlogList.children[i].textContent);
+  }
+  progressListArray=[];
+  for(let i=0;i<progressList.children.length;i++){
+    progressListArray.push(progressList.children[i].textContent);
+  }
+  completeListArray=[];
+  for(let i=0;i<completeList.children.length;i++){
+    completeListArray.push(completeList.children[i].textContent);
+  }
+  onHoldListArray=[];
+    for(let i=0;i<onHoldList.children.length;i++){
+    onHoldListArray.push(onHoldList.children[i].textContent);
+  }
+  // console.log(backlogListArray, progressListArray, completeListArray, onHoldListArray);
+  updateDOM();
 }
 
 // Function to fun when drag 
@@ -125,6 +150,7 @@ function drop(e){
   // Add item to column
   const parent=listColumns[currentColumn];
   parent.appendChild(draggedItem);
+  rebuildArrays();
 }
 
 //Ondrag Enter
